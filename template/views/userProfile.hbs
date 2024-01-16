@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    {{!-- bootstrap --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body style="margin: 0; height: 75vh; display: flex; flex-direction: column; justify-content: space-between;">
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s"
+        style="background-color: #f8f9fa; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); width: 100%; ">
+        <div style="max-width: 100%; align-items:center padding: 0 15px; margin: 0 auto;">
+            <div class="row">
+                <div class="col-12" style="display: flex; align-items: center; justify-content: space-between;">
+                    <nav class="main-nav" style="display: flex; align-items: center;">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo" style="display: inline-block; margin-right: 30px;">
+                            <img src="assets/images/logo.png" alt="Chain App Dev" style="height: 50px;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav" style="list-style: none; padding: 0; display: flex;">
+                            <li class="scroll-to-section" style="margin-right: 20px;"><a href="#top" class="active"
+                                    style="color: #333; text-decoration: none;">Home</a></li>
+                            <li class="scroll-to-section" style="margin-right: 20px;"><a href="#about"
+                                    style="color: #333; text-decoration: none;">About</a></li>
+                            <li class="scroll-to-section" style="margin-right: 20px;"><a href="/profile-page"
+                                    style="color: #333; text-decoration: none;">Profile</a></li>
+                            <li class="scroll-to-section" style="margin-right: 20px;"><a href="/logout-page"
+                                    style="color: #333; text-decoration: none;">Logout</a></li>
+                            <li class="scroll-to-section" style="margin-right: 20px;"><a href="/secret-page"
+                                    style="color: #333; text-decoration: none;">Secret</a></li>
+                            <li style="margin-right: 20px;">
+                                <div class="gradient-button"
+                                    style="padding: 5px 15px; background: linear-gradient(45deg, #49e2fdf6, #536a6b); border-radius: 5px;">
+                                    <a id="modal_trigger" href="/registration-page"
+                                        style="color: white; text-decoration: none;"><i
+                                            class="fa fa-sign-in-alt"></i>Register</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="gradient-button"
+                                    style="padding: 5px 15px; background: linear-gradient(45deg, #6dd5ed, #2193b0); border-radius: 5px;">
+                                    <a id="modal_trigger" href="/login-page"
+                                        style="color: white; text-decoration: none;"><i
+                                            class="fa fa-sign-in-alt"></i>Login</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <a class='menu-trigger' style="display: none;">
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <section class="vh-100" style="background-color: #f4f5f7;">
+        <div class="container py-5 h-100" style="width: 100%;">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <form action="/edit-page" method="post">
+                    <div class="col col-lg-12 mb-4 mb-lg-0">
+                        <div class="card mb-3" style="border-radius: .5rem;">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-white"
+                                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                        alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                                    {{!-- Name --}}
+                                    <h6>Name:</h6>
+                                    <input name="fullName" type="text" value="{{user.fullName}}" class="form-control text-center"
+                                        style="background: transparent; color: white; border: none;">
+                                    {{!-- UserName --}}
+                                    <h6>UserName:</h6>
+                                    <input name="userName" type="text" value="{{user.userName}}" class="form-control text-center"
+                                        style="background: transparent; color: white; border: none;">
+                                    <i class="far fa-edit mb-5"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <h6>Information</h6>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Email</h6>
+                                                {{!-- <input name="user_id" type="hidden" value="{{user._id}}" class="form-control"> --}}
+                                                <input name="email" type="email" value="{{user.email}}" class="form-control">
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Phone</h6>
+                                                <input name="phoneNumber" type="tel" value="{{user.phoneNumber}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Password</h6>
+                                                <input name="password" type="text" value="{{user.password}}" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gradient-button"
+                                    style="margin-top: 20px; margin-left: 60px; padding: 5px 15px; background: linear-gradient(45deg, #6dd5ed, #2193b0); border-radius: 5px; align-item:center;">
+                                    <button id="modal_trigger" type="submit"
+                                        style="background-color: transparent; border: none; color: rgb(255, 255, 255); text-decoration: none;">Edit
+                                        Data</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="/delete-page" method="post"
+                    onsubmit="return confirm('Are you sure you want to delete your account?');">
+                    <div class="gradient-button"
+                        style="margin-left: 10px; padding: 5px 15px; background: linear-gradient(45deg, #6dd5ed, #2193b0); border-radius: 5px;">
+                        <button id="modal_trigger" type="submit"
+                                        style="background-color: transparent; border: none; color: rgb(255, 255, 255); text-decoration: none;">Delete
+                                        Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

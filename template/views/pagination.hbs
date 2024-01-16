@@ -1,0 +1,90 @@
+<!-- views/index.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registered Students</title>
+  <style>
+    .pagination {
+      display: flex;
+      list-style: none;
+      padding: 0;
+    }
+
+    .pagination li {
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body style="margin: 0; height: auto; display: flex; flex-direction: column; justify-content: space-between;">
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s"
+    style="background-color: #f8f9fa; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);">
+    <div style="max-width: 1170px; padding: 0 15px; margin: 0 auto;">
+      <div class="row">
+        <div class="col-12" style="display: flex; align-items: center; justify-content: space-between;">
+          <nav class="main-nav" style="display: flex; align-items: center;">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo" style="display: inline-block; margin-right: 30px;">
+              <img src="assets/images/logo.png" alt="Chain App Dev" style="height: 50px;">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav" style="list-style: none; padding: 0; display: flex;">
+              <li class="scroll-to-section" style="margin-right: 20px;"><a href="#top" class="active"
+                  style="color: #333; text-decoration: none;">Home</a></li>
+              <li class="scroll-to-section" style="margin-right: 20px;"><a href="#about"
+                  style="color: #333; text-decoration: none;">About</a></li>
+              <li class="scroll-to-section" style="margin-right: 20px;"><a href="/secret-page"
+                  style="color: #333; text-decoration: none;">Secret</a></li>
+              <li class="scroll-to-section" style="margin-right: 20px;"><a href="/profile-page"
+                  style="color: #333; text-decoration: none;">Profile</a></li>
+              <li class="scroll-to-section" style="margin-right: 20px;"><a href="/logout-page"
+                  style="color: #333; text-decoration: none;">Logout</a></li>
+              <li style="margin-right: 20px;">
+                <div class="gradient-button"
+                  style="padding: 5px 15px; background: linear-gradient(45deg, #ff416c, #ff4b2b); border-radius: 5px;">
+                  <a id="modal_trigger" href="/registration-page" style="color: white; text-decoration: none;"><i
+                      class="fa fa-sign-in-alt"></i>Register</a>
+                </div>
+              </li>
+              <li>
+                <div class="gradient-button"
+                  style="padding: 5px 15px; background: linear-gradient(45deg, #6dd5ed, #2193b0); border-radius: 5px;">
+                  <a id="modal_trigger" href="/login-page" style="color: white; text-decoration: none;"><i
+                      class="fa fa-sign-in-alt"></i>Login</a>
+                </div>
+              </li>
+            </ul>
+            <a class='menu-trigger' style="display: none;">
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+  <h1>Registered Students</h1>
+  <ul>
+    {{#each data}}
+    <li><strong>{{this.fullName}}</strong> ===> {{this.email}} ==> ({{this.phoneNumber}})</li>
+    {{/each}}
+  </ul>
+
+  <ul class="pagination">
+    {{#if totalPages}}
+    {{#each pages}}
+    <li><a href="/data?page={{this}}">{{this}}</a></li>
+    {{/each}}
+    {{/if}}
+  </ul>
+
+</body>
+
+</html>
