@@ -46,5 +46,15 @@ registration.pre("save" , async function(next){
 })
 
 //make collection in db
-const RegisteredStudents = new mongoose.model("RegisteredStudents" , registration)
-export default RegisteredStudents
+const RegisteredStudents = new mongoose.model("RegisteredStudents" , registration);
+
+// Define a Post model and schema (adjust as needed)
+const PostSchema = new mongoose.Schema({
+    title: String,
+    content: String,
+    imageUrl: String,
+});
+//make post collection in db 
+const UserPost = new mongoose.model('UserPost', PostSchema);
+
+export { RegisteredStudents , UserPost };
