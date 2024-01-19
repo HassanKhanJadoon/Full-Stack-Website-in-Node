@@ -6,7 +6,7 @@ import registrationSchema from "../validators/regschema.mjs";
 import { RegisteredStudents , UserPost } from "../models/regStudent.mjs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import auth from "../middleware/auth.mjs";
+import { auth , isAuthor} from "../middleware/auth.mjs";
 import mongoose from "mongoose";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -247,17 +247,6 @@ router.post("/homepage", async (req, res) => {
     }
 })
 
-// router.post("/login", (req, res) => {
-//     const { email, password } = req.body;
-
-//     // Log the received email and password to the console
-//     console.log(`Email: ${email}, Password: ${password}`);
-
-//     // You can then send a response back to the client.
-//     // For example, a simple confirmation message
-//     res.send("Credentials received");
-// });
-
 
 // Get entire data with pagination from db
 router.get('/data', async (req, res) => {
@@ -298,53 +287,80 @@ router.get("/userposts-page", auth, (req, res) => {
 });
 
 // Create a new post by user
-router.post('/create-post', async (req, res) => {
+router.post('/create-post', auth , async (req, res) => {
     try {
-        const { imageUrl , title, content } = req.body;
-        const post = new UserPost({ imageUrl , title, content });
+        const { imageUrl , title, content} = req.body;
+        const post = new UserPost({ imageUrl , title, content , author: req.user._id });
         await post.save();
         res.redirect('/blogs');
     } catch (error) {
-        console.error(error);
-        res.redirect('/');
+        res.status(500).send('Error creating post');
     }
 });
 
 // Read all posts
 router.get('/blogs', async (req, res) => {
     try {
-        const posts = await UserPost.find({});
+        const posts = await UserPost.find().populate('author');
         res.render('blogs', { posts });
     } catch (error) {
-        console.error(error);
-        res.render('blogs', { posts: [] });
+        res.status(500).send('Error fetching posts');
     }
 });
 
-// Update a post
-router.patch('/posts/:id', async (req, res) => {
+//edit blog post
+router.get('/edit-post/:id', auth, async (req, res) => {
     try {
-      const { title, content } = req.body;
-      const updatedPost = await UserPost.findByIdAndUpdate(req.params.id, { title, content });
-      res.redirect('/');
+        const post = await UserPost.findById(req.params.id);
+        if (post && post.author.equals(req.user._id)) {
+            res.render('patchDelBlog', { post });
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     } catch (error) {
-      console.error(error);
-      res.redirect('/');
+        res.status(500).send(error.message);
     }
-  });
+});
+// Update blog post
+router.post('/update-post/:id', auth, async (req, res) => {
+    try {
+        const { imageUrl, title, content } = req.body;
+        const post = await UserPost.findById(req.params.id);
 
-// Delete a post
-router.delete('/posts/:id', async (req, res) => {
-    try {
-      await UserPost.findByIdAndRemove(req.params.id);
-      res.redirect('/');
+        if (post && post.author.equals(req.user._id)) {
+            post.imageUrl = imageUrl;
+            post.title = title;
+            post.content = content;
+            await post.save();
+            res.redirect('/blogs');
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     } catch (error) {
-      console.error(error);
-      res.redirect('/');
+        res.status(500).send('Error updating post');
     }
-  });
+});
+
+//delete blog post
+router.post('/delete-post/:id', auth, async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const post = await UserPost.findById(postId);
+
+        if (post && post.author.equals(req.user._id)) {
+            await UserPost.deleteOne({ _id: postId });
+            res.redirect('/blogs');
+        } else {
+            res.status(403).send('Unauthorized');
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+
 
 /************************************Posting Blogs by user ends *******************************************************/
 
 
-export default router
+export default router;

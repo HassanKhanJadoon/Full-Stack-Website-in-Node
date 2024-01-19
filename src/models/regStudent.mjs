@@ -53,6 +53,7 @@ const PostSchema = new mongoose.Schema({
     title: String,
     content: String,
     imageUrl: String,
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'RegisteredStudents' },
 });
 //make post collection in db 
 const UserPost = new mongoose.model('UserPost', PostSchema);

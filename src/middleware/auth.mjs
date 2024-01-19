@@ -24,5 +24,23 @@ const auth = async (req, res, next) => {
 
         
     }
-}
-export default auth;
+};
+
+// Middleware for checking if the user is the author of a blog post
+const isAuthor = async (req, res, next) => {
+    try {
+        const postId = req.params.id;
+        const post = await UserPost.findById(postId);
+
+        // Check if the user making the request is the author of the post
+        if (post.author.equals(req.user._id)) {
+            next(); // User is authorized, proceed to the route handler
+        } else {
+            throw new Error('You are not authorized to perform this action.');
+        }
+    } catch (error) {
+        res.status(403).send(error.message);
+    }
+};
+
+export { auth , isAuthor};

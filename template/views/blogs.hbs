@@ -108,8 +108,10 @@
                         </div>
                         <h4>{{ title }}</h4>
                         <p>{{ content }}</p>
+                        {{!-- <h6>Author: {{author}} </h6> --}}
                         <div class="text-button">
                             <a href="#">Read More <i class="fa fa-arrow-right"></i></a>
+                            <a href="/edit-post/{{_id}}">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -126,6 +128,7 @@
     <script src="assets/js/imagesloaded.js"></script>
     <script src="assets/js/popup.js"></script>
     <script src="assets/js/custom.js"></script>
+
     <script>
         // Function to add a new blog widget to the container
         function addBlogWidget(post) {
@@ -140,6 +143,7 @@
             </div>
             <h4>${post.title}</h4>
             <p>${post.content}</p>
+            <h6>${post.author}</h6>
             <div class="text-button">
                 <a href="#">Read More <i class="fa fa-arrow-right"></i></a>
             </div>
@@ -160,6 +164,7 @@
                 title: 'New Blog Post Title',
                 content: 'New Blog Post Content',
                 imageUrl: 'new-post-image.jpg',
+                author: 'New Blog Post Author'
             };
 
             // Add the new blog widget

@@ -67,15 +67,15 @@
     <section class="vh-100" style="background-color: #f4f5f7;">
         <div class="container py-5 h-100" style="width: 100%;">
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <h1>CREATE BLOG POST</h1>
-                <form action="/create-post" method="post">
+                <h1>EDIT OR DELETE BLOG POST</h1>
+                <form action="/update-post/{{post._id}}" method="post">
                     <div class="col col-lg-12 mb-4 mb-lg-0">
                         <div class="card mb-3" style="border-radius: .5rem;">
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex flex-column justify-content-center align-items-center"
                                     style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                                     <!-- Display Uploaded Image -->
-                                    <img id="avatar-image" src="" alt="Avatar" class="img-fluid my-5"
+                                    <img id="avatar-image" src="{{post.imageUrl}}" alt="{{post.title}}" class="img-fluid my-5"
                                         style="width: 80px;" />
 
                                     <!-- Image Upload -->
@@ -92,21 +92,14 @@
                                         <!-- Blog Title -->
                                         <div class="col-12 mb-3">
                                             <h4>Blog Title</h4>
-                                            <input type="text" class="form-control" name="title"
-                                                placeholder="Enter Blog Title" required>
+                                            <input type="text" name="title" value="{{post.title}}" class="form-control">
                                         </div>
                                         <!-- Blog Content -->
                                         <div class="col-12 mb-3">
                                             <h3>Blog Content</h3>
-                                            <textarea class="form-control" name="content" rows="4"
-                                                placeholder="Enter Blog Content" required></textarea>
+                                            <textarea class="form-control" name="content"
+                                                rows="4">{{post.content}}</textarea>
                                         </div>
-                                        {{!-- Author of Blog --}}
-                                        {{!-- <div class="col-12 mb-3">
-                                            <h4>Author Name</h4>
-                                            <input type="text" class="form-control" name="author"
-                                                placeholder="Enter your Name" required>
-                                        </div> --}}
 
                                         <div class="gradient-button"
                                             style="margin-top: 20px; padding: 5px 120px; background: linear-gradient(45deg, #6dd5ed, #2193b0); border-radius: 5px; ">
@@ -119,7 +112,7 @@
                             </div>
                 </form>
 
-                {{!-- <form action="/delete-page" method="post"
+                <form action="/delete-post/{{post._id}}" method="post"
                     onsubmit="return confirm('Are you sure you want to delete your account?');">
                     <div class="gradient-button"
                         style=" margin-top: 20px; padding: 5px 120px; background: linear-gradient(45deg, #6dd5ed, #2193b0); border-radius: 5px;">
@@ -127,7 +120,7 @@
                             style="background-color: transparent; border: none; color: rgb(255, 255, 255); text-decoration: none;">Delete
                             Data</button>
                     </div>
-                </form> --}}
+                </form>
             </div>
         </div>
     </section>

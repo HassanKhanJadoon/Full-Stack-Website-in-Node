@@ -24,6 +24,14 @@ hbs.registerPartials(path.join('./template/partials'));
 const partialPath = path.join(process.cwd(), './template/views')
 app.set('views', partialPath);
 
+// Register the ifCond helper
+hbs.registerHelper('ifCond', function(v1, v2, options) {
+    if (v1 === v2) {
+        return options.fn(this);
+    }
+    return options.inverse(this);
+});
+
 // connect the static files
 app.use(express.static('public'))
 
